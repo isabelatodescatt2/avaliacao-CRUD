@@ -21,3 +21,15 @@ async function connect() {
     
     return pool.connect();
   }
+
+  async function insertCustomer(customer) {
+    const client = await connect();
+    const sql = "INSERT INTO clientes(cpf, nome, email, ) VALUES ($1, $2, $3)";
+    const values = [customer.nome, customer.idade, customer.uf];
+    await client.query(sql, values)
+}
+
+module.exports = {
+    connect,
+    insertCustomer,
+}
