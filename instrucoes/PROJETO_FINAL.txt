@@ -1,0 +1,19 @@
+inicialização de um projeto node: 
+
+Verifique a instalação do Node.js e do npm
+node -v
+npm -v
+--------------------------------------------------------------------------
+Modo de incialização do projeto de forma Interativa:
+npm init
+
+Modo Automático:
+npm init -y
+---------------------------------------------------------------------------
+
+Instalar bibliotecas necessárias. O projeto é só para back-end
+    npm install pg express dotenv nodemon
+
+Adicionar "dev": "nodemon index.js" no arquivo package.json
+
+Para rodar o projeto, basta digitar: npm run dev ou "start": npm start

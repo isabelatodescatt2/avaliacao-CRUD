@@ -1,0 +1,21 @@
+{
+  "name": "avaliacaocrud",
+  "version": "1.0.0",
+  "description": "avaliacaoCRUD",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "(https://github.com/isabelatodescatt2/avaliacaoCRUD.git)"
+  },
+  "author": "isabelatodescatt2",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10",
+    "pg": "^8.16.0"
+  }
+}
