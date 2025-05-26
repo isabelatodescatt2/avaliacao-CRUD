@@ -24,7 +24,7 @@ async function connect() {
 
   async function insertCustomer(customer) {
     const client = await connect();
-    const sql = "INSERT INTO clientes(cpf, nome, email, ) VALUES ($1, $2, $3)";
+    const sql = "INSERT INTO clientes(cpf, nome, email, c6, c7, c8, c9, c10) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)";
     const values = [customer.nome, customer.idade, customer.uf];
     await client.query(sql, values)
 }

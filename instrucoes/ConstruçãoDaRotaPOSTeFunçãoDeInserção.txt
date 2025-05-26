@@ -1,0 +1,93 @@
+Como criar uma função para inserir dados no banco de dados e uma rota POST para
+receber as informações e chamar essa função? O exemplo está dividido em dois arquivos:
+db.js e index.js.
+
+-------------------------------------------------------------------------------------------------------
+ARQUIVO: DB.JS
+Nesse arquivo, definimos a função assíncrona insertCustomer que insere os dados de um cliente na tabela do banco de dados. Confira o código:
+// Função para inserir clientes no banco de dados. Essa função recebe informações vindos da rota POST.
+async function insertCustomer(customer) {
+
+ // Estabelecer conexão com o banco de dados (a função "connect" deve ser definida em outro lugar)
+ const client = await connect();
+
+ // Prepara a query SQL de inserção com parâmetros para evitar SQL Injection
+ const sql = "INSERT INTO client (cpf, nome, email, idade, profissao) VALUES ($1, $2, $3, $4, $5)";
+ 
+ // Cria um array com os valores que serão injetados na query, na ordem correta
+ const values = [customer.cpf, customer.nome, customer.email, customer.idade, customer.profissao];
+
+ // Executa a query no banco de dados para inserir o cliente
+ await client.query(sql, values);
+}
+
+// Exporta a função para que ela possa ser usada em outras partes do backend
+module.exports = {
+insertCustomer
+}
+
+
+EXPLICAÇÃO PASSO A PASSO
+1. Função Assíncrona (async) e await A palavra-chave async permite usar o
+await para operações que demoram, como conectar ao banco de dados ou
+executar uma query, garantindo que o sistema aguarde a conclusão dessas tarefas
+sem travar o servidor.
+
+2. Conexão com o Banco de Dados A linha const client = await connect();
+(supondo que a função connect() esteja definida em outra parte do código)
+estabelece a conexão com o banco para que possamos enviar comandos SQL.
+
+3. Preparação da Query SQL A string sql contém o comando de inserção. Os
+marcadores $1, $2, etc., são usados para inserir os valores de forma segura,
+prevenindo ataques de SQL Injection.
+
+4. Criação do Array de Valores O array values é preenchido com as informações do
+objeto customer, na mesma ordem que os parâmetros da query.
+
+5. Execução da Query Ao chamar await client.query(sql, values), o código
+envia o comando para o banco de dados e insere os dados do cliente.
+
+6. Exportação do Módulo No final, exportamos a função usando module.exports,
+permitindo que outros arquivos (como o index.js) usem essa função.
+
+
+-------------------------------------------------------------------------------------------------------
+ARQUVIO: INDEX.JS
+Nesse arquivo, definimos a rota POST que recebe as informações do cliente e chama a
+função insertCustomer para inserir os dados no banco. Veja o código:
+
+// Rota responsável pelo envio de informações para a função que insere dados de clientes no banco de dados
+app.post('/client', async (req, res) => {
+
+ // O objeto req.body contem os dados enviados pelo cliente na requisição POST
+ await db.insertCustomer(req.body);
+
+ // Envia o status 201 para indicar que um novo recurso foi criado com sucesso
+ res.sendStatus(201);
+});
+
+
+EXPLICAÇÃO PASSO A PASSO
+1. Criação da Rota POST Usamos app.post('/client', async (req, res) => { ... }) para
+definir uma rota que escuta requisições do tipo POST na URL /client. Isso significa que, sempre que
+um cliente enviar uma requisição para essa URL, essa função será executada.
+
+2. Recebendo os Dados da Requisição O objeto req.body contém os dados enviados pelo cliente no
+corpo da requisição. É importante que, no seu servidor, você configure um middleware (como
+express.json()) para automaticamente converter os dados JSON em um objeto JavaScript.
+
+3. Chamando a Função de Inserção Dentro da rota, chamamos await
+db.insertCustomer(req.body); para enviar os dados para a função que faz a inserção no banco
+de dados.
+
+4. Resposta ao Cliente Depois que os dados forem inseridos com sucesso, respondemos com
+res.sendStatus(201). O status HTTP 201 indica que o recurso foi criado corretamente.
+Por que nós organizamos o código dessa forma?
+
+    ● Modularização: A função que interage com o banco de dados está em um arquivo
+    separado (db.js). Isso facilita a manutenção e a escalabilidade do projeto.
+
+    ● Segurança: Usamos query parametrizada para evitar ataques como SQL Injection.
+
+    ● Clareza na Rota: A rota em index.js recebe os dados do cliente e delega a
+    responsabilidade de inserção ao módulo do banco, retornando um status apropriado.
