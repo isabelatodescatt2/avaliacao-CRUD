@@ -23,7 +23,7 @@ async function connect() {
   }
 
 // Função para listar clientes
-async function selectCustomers() {
+  async function selectCustomers() {
     // Estabelecer conexão com o banco de dados
     const client = await connect();
     // Enviar comando SQL para o banco de dados
@@ -33,13 +33,14 @@ async function selectCustomers() {
     }
 
 // Função para listar um cliente
-async function selectCustomer(id) {
+  async function selectCustomer(id) {
     // Estabelece a conexão com o banco de dados
     const client = await connect();
     // Executa a query SQL usando declaração preparada para evitar SQL Injection
     const res = await client.query("SELECT * FROM client WHERE cpf=$1", [id]);
     // Retorna as linhas (dados do cliente)
     return res.rows;
+  }
 
   async function insertCustomer(customer) {
     const client = await connect();
