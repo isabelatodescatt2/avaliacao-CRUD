@@ -30,7 +30,7 @@ async function connect() {
     const res = await client.query("SELECT * FROM client");
     // Retorna as linhas (registros) da tabela
     return res.rows;
-    }
+}
 
 // Função para listar um cliente
   async function selectCustomer(id) {
@@ -40,7 +40,7 @@ async function connect() {
     const res = await client.query("SELECT * FROM client WHERE cpf=$1", [id]);
     // Retorna as linhas (dados do cliente)
     return res.rows;
-  }
+}
 
   async function insertCustomer(customer) {
     const client = await connect();
