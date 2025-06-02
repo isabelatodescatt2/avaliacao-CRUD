@@ -16,6 +16,14 @@ app.listen(port);
 
 console.log("Backend Rodando!")
 
+// Rota GET para listar todos os clientes
+app.get('/client', async (req, res) => {
+// Chama a função que seleciona os clientes no banco de dados
+const clientes = await db.selectCustomers();
+// Envia a resposta em formato JSON contendo os clientes
+res.json(clientes);
+});
+
 app.post('/client', async (req, res) => {
     await db.insertCustomer(req.body);
     res.sendStatus(201);
