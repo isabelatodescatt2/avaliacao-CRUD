@@ -24,6 +24,14 @@ const clientes = await db.selectCustomers();
 res.json(clientes);
 });
 
+// Rota para listar um cliente específico
+app.get('/client/:id', async (req, res) => {
+// Captura o parâmetro 'id' presente na URL, que corresponde ao CPF do cliente
+const cliente = await db.selectCustomer(req.params.id);
+// Responde com os dados do cliente em formato JSON
+res.json(cliente);
+});
+
 app.post('/client', async (req, res) => {
     await db.insertCustomer(req.body);
     res.sendStatus(201);
