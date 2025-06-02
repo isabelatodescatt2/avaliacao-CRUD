@@ -22,6 +22,16 @@ async function connect() {
     return pool.connect();
   }
 
+// Função para listar clientes
+async function selectCustomers() {
+    // Estabelecer conexão com o banco de dados
+    const client = await connect();
+    // Enviar comando SQL para o banco de dados
+    const res = await client.query("SELECT * FROM client");
+    // Retorna as linhas (registros) da tabela
+    return res.rows;
+    }
+
   async function insertCustomer(customer) {
     const client = await connect();
     const sql = "INSERT INTO clientes(cpf, nome, email, idade, profissao, c8, c9, c10) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)";
@@ -32,4 +42,5 @@ async function connect() {
 module.exports = {
     connect,
     insertCustomer,
+    selectCustomers,
 }
