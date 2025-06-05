@@ -8,5 +8,9 @@ Prova (20%) Essa parte da avaliação tem o objetivo de testar os conhecimentos 
 ## ☆ Teste da rota GET ☆
 ![Rota GET](https://github.com/user-attachments/assets/27914f25-5ffa-4e6b-8cf1-fb5391242d2d)
 
+## ☆ Teste da rota DELETE ☆
+![Rota DELETE](https://github.com/user-attachments/assets/515156fc-4fad-478c-97ad-c31d704b6eaa)
+
+
 
 ## ᨐฅ
